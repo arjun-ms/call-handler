@@ -1,0 +1,34 @@
+{
+    "timestamp": "Fri May 15 22:31:10 2026",
+    "directory": "tests\\test-audio-files\\real-call",
+    "summary": {
+        "total_files": 1,
+        "labeled_files": 1,
+        "gender_accuracy": 0.0,
+        "age_accuracy": 1.0,
+        "avg_latency_ms": 120271.58164978027
+    },
+    "details": [
+        {
+            "filename": "female_17.aac",
+            "expected": {
+                "gender": "female",
+                "age": "18-30"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.86
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.83
+                }
+            },
+            "match": {
+                "gender": false,
+                "age": true
+            }
+        }
+    ]
+}

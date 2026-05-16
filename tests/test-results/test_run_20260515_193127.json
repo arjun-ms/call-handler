@@ -1,0 +1,64 @@
+{
+  "timestamp": "20260515_193127",
+  "directory": "test-audio-files\\CREMA-D",
+  "files_tested": 3,
+  "successful": 3,
+  "failed": 0,
+  "total_api_latency_ms": 12085,
+  "details": [
+    {
+      "filename": "1001_male_51.wav",
+      "status": "success",
+      "api_latency_ms": 6235,
+      "response": {
+        "contact_id": "e91f7556-f409-402e-99e7-5d7d2ab1ee49",
+        "gender": {
+          "prediction": "male",
+          "confidence": 0.99
+        },
+        "age_bracket": {
+          "prediction": "46-60",
+          "confidence": 0.82
+        },
+        "processing_ms": 3974,
+        "audio_quality": "good"
+      }
+    },
+    {
+      "filename": "1002_female_21.wav",
+      "status": "success",
+      "api_latency_ms": 2973,
+      "response": {
+        "contact_id": "c7a850eb-c936-4b9a-a2c3-0935dcabc8dc",
+        "gender": {
+          "prediction": "female",
+          "confidence": 0.98
+        },
+        "age_bracket": {
+          "prediction": "18-30",
+          "confidence": 0.9
+        },
+        "processing_ms": 883,
+        "audio_quality": "degraded"
+      }
+    },
+    {
+      "filename": "1008_female_older.wav",
+      "status": "success",
+      "api_latency_ms": 2877,
+      "response": {
+        "contact_id": "f152bcc9-fe52-4c81-849e-cef06a77febe",
+        "gender": {
+          "prediction": "female",
+          "confidence": 0.99
+        },
+        "age_bracket": {
+          "prediction": "31-45",
+          "confidence": 0.82
+        },
+        "processing_ms": 832,
+        "audio_quality": "good"
+      }
+    }
+  ]
+}

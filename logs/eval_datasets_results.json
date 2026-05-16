@@ -1,0 +1,646 @@
+{
+    "apptek": [
+        {
+            "filename": "en_AU_Agriculture_1586330_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Agriculture_1586330_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 29857075456\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Agriculture_1586330_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Agriculture_1586330_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 29857075456\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Agriculture_1592662_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Agriculture_1592662_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5827461120\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Agriculture_1592662_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Agriculture_1592662_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5827459072\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1585418_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1585418_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5303500800\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1585418_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1585418_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5303500800\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1586330_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1586330_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 20048294656\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1586330_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1586330_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 20048294656\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1592663_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1592663_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5921058816\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1592663_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1592663_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5921058816\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1593397_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1593397_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5953173504\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Aviation_1593397_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Aviation_1593397_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5953173504\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1586330_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1586330_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 28221312256\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1586330_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1586330_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 28221312256\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1590914_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1590914_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 64142653696\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1590914_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1590914_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running FusedMatMul node. Name:'/wav2vec2/encoder/layers.0/attention/MatMul/MatmulTransposeFusion/' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 64142653696\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1592666_channel1.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1592666_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5993404416\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_Banking_1592666_channel2.wav",
+            "expected": {
+                "filename": "en_AU_Banking_1592666_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5993404416\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_DeliveryService_1585416_channel1.wav",
+            "expected": {
+                "filename": "en_AU_DeliveryService_1585416_channel1.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5471293440\n"
+            },
+            "status": "error"
+        },
+        {
+            "filename": "en_AU_DeliveryService_1585416_channel2.wav",
+            "expected": {
+                "filename": "en_AU_DeliveryService_1585416_channel2.wav",
+                "gender": "unknown",
+                "age": "unknown",
+                "accent": "unknown"
+            },
+            "actual": {
+                "error": "[ONNXRuntimeError] : 6 : RUNTIME_EXCEPTION : Non-zero status code returned while running Conv node. Name:'/wav2vec2/feature_extractor/conv_layers.0/conv/Conv' Status Message: E:\\_work\\1\\s\\onnxruntime\\core\\framework\\bfc_arena.cc:358 onnxruntime::BFCArena::AllocateRawInternal Failed to allocate memory for requested buffer of size 5471291392\n"
+            },
+            "status": "error"
+        }
+    ],
+    "commonphone": [
+        {
+            "filename": "commonphone_0.wav",
+            "expected": {
+                "filename": "commonphone_0.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.7
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_1.wav",
+            "expected": {
+                "filename": "commonphone_1.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.99
+                },
+                "age_bracket": {
+                    "prediction": "31-45",
+                    "confidence": 0.93
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_10.wav",
+            "expected": {
+                "filename": "commonphone_10.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.97
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.92
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_11.wav",
+            "expected": {
+                "filename": "commonphone_11.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.96
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.83
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_12.wav",
+            "expected": {
+                "filename": "commonphone_12.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.96
+                },
+                "age_bracket": {
+                    "prediction": "31-45",
+                    "confidence": 0.79
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_13.wav",
+            "expected": {
+                "filename": "commonphone_13.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.68
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.89
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_14.wav",
+            "expected": {
+                "filename": "commonphone_14.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.61
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.78
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_15.wav",
+            "expected": {
+                "filename": "commonphone_15.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.82
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_16.wav",
+            "expected": {
+                "filename": "commonphone_16.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.82
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_17.wav",
+            "expected": {
+                "filename": "commonphone_17.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.99
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.82
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_18.wav",
+            "expected": {
+                "filename": "commonphone_18.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.95
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_19.wav",
+            "expected": {
+                "filename": "commonphone_19.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.92
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_2.wav",
+            "expected": {
+                "filename": "commonphone_2.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.8
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.95
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_3.wav",
+            "expected": {
+                "filename": "commonphone_3.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.87
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.76
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_4.wav",
+            "expected": {
+                "filename": "commonphone_4.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.99
+                },
+                "age_bracket": {
+                    "prediction": "31-45",
+                    "confidence": 0.88
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_5.wav",
+            "expected": {
+                "filename": "commonphone_5.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.88
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.89
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_6.wav",
+            "expected": {
+                "filename": "commonphone_6.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.89
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.95
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_7.wav",
+            "expected": {
+                "filename": "commonphone_7.wav",
+                "gender": "female",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.96
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.95
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_8.wav",
+            "expected": {
+                "filename": "commonphone_8.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.95
+                }
+            },
+            "status": "success"
+        },
+        {
+            "filename": "commonphone_9.wav",
+            "expected": {
+                "filename": "commonphone_9.wav",
+                "gender": "male",
+                "age": "teens"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "31-45",
+                    "confidence": 0.78
+                }
+            },
+            "status": "success"
+        }
+    ]
+}

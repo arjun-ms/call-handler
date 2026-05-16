@@ -1,0 +1,17 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+pydantic-settings>=2.0.0
+librosa>=0.10.0
+numpy>=1.26.0
+scipy>=1.12.0
+webrtcvad>=2.0.10
+transformers>=4.40.0
+torch>=2.2.0
+audonnx>=0.1.0
+audeer>=1.0.0
+onnxruntime>=1.17.0
+soundfile>=0.12.0
+pytest>=8.0.0
+httpx>=0.27.0
+pytest-asyncio>=0.23.0

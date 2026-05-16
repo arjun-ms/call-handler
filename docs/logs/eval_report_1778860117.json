@@ -1,0 +1,76 @@
+{
+    "timestamp": "Fri May 15 21:18:37 2026",
+    "directory": "test-audio-files\\CREMA-D",
+    "summary": {
+        "total_files": 3,
+        "labeled_files": 3,
+        "gender_accuracy": 1.0,
+        "age_accuracy": 0.6666666666666666,
+        "avg_latency_ms": 8648.995717366537
+    },
+    "details": [
+        {
+            "filename": "1001_male_51.wav",
+            "expected": {
+                "gender": "male",
+                "age": "46-60"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "male",
+                    "confidence": 0.98
+                },
+                "age_bracket": {
+                    "prediction": "46-60",
+                    "confidence": 0.95
+                }
+            },
+            "match": {
+                "gender": true,
+                "age": true
+            }
+        },
+        {
+            "filename": "1002_female_21.wav",
+            "expected": {
+                "gender": "female",
+                "age": "18-30"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 0.98
+                },
+                "age_bracket": {
+                    "prediction": "18-30",
+                    "confidence": 0.91
+                }
+            },
+            "match": {
+                "gender": true,
+                "age": true
+            }
+        },
+        {
+            "filename": "1008_female_older.wav",
+            "expected": {
+                "gender": "female",
+                "age": "60+"
+            },
+            "actual": {
+                "gender": {
+                    "prediction": "female",
+                    "confidence": 1.0
+                },
+                "age_bracket": {
+                    "prediction": "31-45",
+                    "confidence": 0.92
+                }
+            },
+            "match": {
+                "gender": true,
+                "age": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - VOICE_DEBUG=false
+    volumes:
+      - model-cache:/app/cache
+      - model-data:/app/model
+    restart: unless-stopped
+
+volumes:
+  model-cache:
+  model-data:
