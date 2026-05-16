@@ -10,3 +10,5 @@ model/
 dist/
 build/
 test-audio-files/
+pytest_tmp/
+logs/
