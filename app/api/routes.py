@@ -81,11 +81,55 @@ async def infer(file: UploadFile = File(...)):
                 detail="insufficient_audio: audio quality too poor for inference",
             )
 
-        # Extract speech segments via VAD
-        speech = extract_speech(audio, sr)
+        # Use VadTrigger and Diarizer to separate speakers
+        import numpy as np
+        from app.audio.vad import VadTrigger
+        from app.inference.diarizer import Diarizer
 
-        # Run inference
-        results = predict(speech, sr)
+        trigger = VadTrigger(sample_rate=sr)
+        diarizer = Diarizer()
+
+        # Get bursts
+        bursts = trigger.process_audio(audio)
+        if trigger.current_burst:
+            bursts.append(np.concatenate(trigger.current_burst))
+
+        if not bursts:
+            logger.warning("No speech bursts detected by VadTrigger, falling back to full audio")
+            customer_speech = audio
+        else:
+            # Diarize bursts
+            speaker_segments = {}
+            first_speaker = None
+            
+            for burst in bursts:
+                spk_id = diarizer.process_burst(burst)
+                if spk_id not in speaker_segments:
+                    speaker_segments[spk_id] = []
+                    if first_speaker is None:
+                        first_speaker = spk_id
+                speaker_segments[spk_id].append(burst)
+                
+            # Heuristic: Assume first speaker is Agent. The other speaker is Customer.
+            customer_speaker = None
+            if len(speaker_segments) == 1:
+                customer_speaker = list(speaker_segments.keys())[0]
+            else:
+                for spk_id in speaker_segments.keys():
+                    if spk_id != first_speaker:
+                        customer_speaker = spk_id
+                        break
+                        
+            if not customer_speaker:
+                customer_speaker = first_speaker
+                
+            logger.info("Diarization: selected %s as customer (total speakers: %d)", 
+                        customer_speaker, len(speaker_segments))
+                        
+            customer_speech = np.concatenate(speaker_segments[customer_speaker])
+            
+        # Run inference on customer speech
+        results = predict(customer_speech, sr)
 
         elapsed_ms = int((time.perf_counter() - start) * 1000)
 

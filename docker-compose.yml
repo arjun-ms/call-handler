@@ -1,15 +1,21 @@
 services:
   api:
-    build: .
+    build: 
+      context: .
+      args:
+        - HF_TOKEN=${HF_TOKEN}
     ports:
       - "8000:8000"
     environment:
       - VOICE_DEBUG=false
+      - HF_TOKEN=${HF_TOKEN}
     volumes:
       - model-cache:/app/cache
       - model-data:/app/model
+      - huggingface-cache:/root/.cache/huggingface
     restart: unless-stopped
 
 volumes:
   model-cache:
   model-data:
+  huggingface-cache:

@@ -16,8 +16,8 @@
 app/
 ├── main.py              # FastAPI app factory, lifespan, CORS
 ├── api/
-│   ├── routes.py        # POST /v1/infer endpoint
-│   └── websocket.py     # WS /ws/infer endpoint (bonus)
+│   ├── routes.py        # POST /analyze endpoint
+│   └── websocket.py     # WS /ws/analyze endpoint (bonus)
 ├── core/
 │   ├── config.py        # Settings via pydantic-settings
 │   ├── logging.py       # Structured logging setup
@@ -529,7 +529,7 @@ logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {".wav", ".mp3", ".webm", ".opus", ".m4a", ".ogg", ".flac"}
 
-@router.post("/v1/infer", response_model=InferenceResponse, responses={400: {"model": ErrorResponse}, 422: {"model": ErrorResponse}})
+@router.post("/analyze", response_model=InferenceResponse, responses={400: {"model": ErrorResponse}, 422: {"model": ErrorResponse}})
 async def infer(file: UploadFile = File(...)):
     start = time.perf_counter()
     tmp_input = None
@@ -586,7 +586,7 @@ async def test_infer_endpoint(sample_wav):
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         with open(sample_wav, "rb") as f:
-            resp = await client.post("/v1/infer", files={"file": ("test.wav", f, "audio/wav")})
+            resp = await client.post("/analyze", files={"file": ("test.wav", f, "audio/wav")})
     assert resp.status_code == 200
     data = resp.json()
     assert "gender" in data
@@ -598,7 +598,7 @@ async def test_infer_endpoint(sample_wav):
 async def test_invalid_format():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
-        resp = await client.post("/v1/infer", files={"file": ("test.txt", b"not audio", "text/plain")})
+        resp = await client.post("/analyze", files={"file": ("test.txt", b"not audio", "text/plain")})
     assert resp.status_code == 400
 ```
 

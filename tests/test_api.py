@@ -23,7 +23,7 @@ async def test_infer_valid_audio(sample_wav):
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         with open(sample_wav, "rb") as f:
             resp = await client.post(
-                "/v1/infer",
+                "/analyze",
                 files={"file": ("test.wav", f, "audio/wav")},
             )
 
@@ -54,7 +54,7 @@ async def test_infer_invalid_format():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         resp = await client.post(
-            "/v1/infer",
+            "/analyze",
             files={"file": ("test.txt", b"not audio data", "text/plain")},
         )
     assert resp.status_code == 400
@@ -66,7 +66,7 @@ async def test_infer_empty_file():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         resp = await client.post(
-            "/v1/infer",
+            "/analyze",
             files={"file": ("test.wav", b"", "audio/wav")},
         )
     assert resp.status_code == 400
@@ -79,7 +79,7 @@ async def test_request_id_header(sample_wav):
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         with open(sample_wav, "rb") as f:
             resp = await client.post(
-                "/v1/infer",
+                "/analyze",
                 files={"file": ("test.wav", f, "audio/wav")},
             )
 

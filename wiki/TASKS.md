@@ -57,6 +57,6 @@ This document tracks the progress of the Voice Attribute Inference service imple
 ## 🚀 Future Improvements
 - [ ] GPU-accelerated inference support
 - [ ] Multilingual/Accent detection support
-- [ ] Speaker Diarization & Role Labeling (Agent vs Customer separation)
-- [ ] Real-time progressive inference for WebSockets
+- [x] Speaker Diarization & Role Labeling (Agent vs Customer separation)
+- [x] Real-time progressive inference for WebSockets
 - [ ] Model fine-tuning on noisy logistics-call datasets

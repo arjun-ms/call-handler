@@ -26,3 +26,25 @@ class ErrorResponse(BaseModel):
     error: str
     detail: Optional[str] = None
     contact_id: Optional[str] = None
+
+
+class WebSocketStartEvent(BaseModel):
+    """Event sent by client to initiate streaming."""
+    
+    type: Literal["start"]
+    call_id: str
+    sample_rate: int = 16000
+    encoding: str = "pcm_s16le"
+
+
+class WebSocketInferenceResult(BaseModel):
+    """Event sent by server to client with real-time inference predictions."""
+    
+    type: Literal["inference_result"]
+    call_id: str
+    speaker_id: str
+    role: Literal["Agent", "Customer"]
+    gender: str
+    age_bracket: str
+    confidence_gender: float = Field(ge=0.0, le=1.0)
+    confidence_age: float = Field(ge=0.0, le=1.0)

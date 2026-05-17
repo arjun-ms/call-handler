@@ -52,3 +52,120 @@ Here is the exact breakdown of how you fulfilled each of the four mandatory task
 * **What I implemented:** The service is fully containerized and production-ready.
 * **Observability & Error Handling:** I implemented graceful degradation (mapping low-confidence predictions to `"unknown"` instead of crashing or hallucinating). For observability, I added structured Python logging and built a custom FastAPI `RequestMiddleware` that calculates and injects `processing_ms` execution times into every response.
 * **Containerization:** I wrote a `Dockerfile` and `docker-compose.yml` that correctly handles the complex OS-level dependency of `ffmpeg` alongside the Python environment, ensuring the app spins up reliably on any host machine without manual configuration.
+
+
+
+---
+
+
+# Question 1: How are the agent and customer separated in the raw byte stream?
+
+Since both are present, we have two possibilities for how the audio is delivered to us:
+
+Option A (Stereo/Multi-channel): The stream is stereo, where the agent is strictly on one channel (e.g., Left) and the customer is strictly on the other (e.g., Right).
+
+Option B (Mono): Both voices are mixed down into a single mono channel.
+
+My Recommendation: 
+- I strongly hope it's Option A. In enterprise call centers, SIP/RTP streams can often be tapped as dual-channel. If it's Option A, we simply drop the agent's channel and process the customer's channel using our existing pipeline. 
+- If it's Option B, we are forced to implement Speaker Diarization (e.g., using Pyannote) to separate "Speaker 1" from "Speaker 2" in real-time, which is computationally expensive and introduces latency.
+
+# Question 2: How do we know which speaker is the Customer?
+
+- Option A (The "Greeting" Heuristic): In almost all contact centers, the Agent speaks first ("Hello, thank you for calling Support, my name is..."). We assume the first speaker detected is the Agent, and the second speaker is the Customer.
+- Option B (Agent Voiceprinting): We require the system to have a pre-registered voiceprint (embedding) of the Agent handling the call. We compare the speakers to the known Agent voiceprint and filter them out.
+- Option C (Transcription + NLP): We run Speech-to-Text on the chunks and use a lightweight NLP model to figure out who is saying "How can I help you?". (Warning: This will destroy our <500ms latency budget).
+
+
+
+
+# Question 2: How are the agent and customer separated in the raw byte stream?
+This is the most critical question for the interviewer to ask. It determines whether your solution is trivial or complex.
+
+Possibility A: Stereo Separation (The "Happy Path")
+The audio stream is sent as Stereo audio (2 channels).
+Agent → Left Channel
+Customer → Right Channel
+Solution: You simply discard the Agent's channel and run your existing pipeline on the Customer's channel.
+
+Possibility B: Mono Mix (The "Hard Path")
+The audio is sent as Mono audio (1 channel).
+Both voices are mixed together (e.g., 50% Agent, 50% Customer).
+Solution: You cannot solve this with just your current model. You must implement Speaker Diarization (splitting "Who spoke when").
+
+**lets go with option A becuase even if its inbound or outbound, agents picks and always greet right so go with that**
+
+# Input will be raw byte streams
+
+## Question 3: Stream Chunking & Execution Strategy
+
+Raw bytes will be flowing in continuously. We cannot run heavy Neural Networks (Diarization + Wav2Vec) on every single byte packet, nor can we wait for the call to end. We have to chunk the stream.
+
+How do we decide when to process a chunk of bytes?
+
+- Option A (Fixed Time Window): We blindly buffer exactly 5 seconds of audio, process it, emit a result, and repeat. (Risk: We might cut a word exactly in half, confusing the model).
+
+- Option B (VAD-Triggered Burst): We run an ultra-lightweight Voice Activity Detector (like WebRTC VAD) on the incoming bytes. We buffer the bytes only while someone is speaking. As soon as there is a pause (e.g., 500ms of silence), we take that "speech burst" and pass it to Diarization and Inference.
+
+- Option C (Sliding Window): We maintain a rolling 10-second buffer of audio and re-evaluate the whole thing every 1 second. (Provides the highest accuracy, but consumes the most CPU).
+
+My Recommendation: I highly recommend Option B. It's the gold standard for real-time voice AI. By using pauses as natural boundaries, we feed clean sentences into the diarization/inference models, and we don't waste CPU cycles running models on dead air or hold music.
+
+
+# Question 4: Result Aggregation & Emission Strategy
+
+Now that we are processing bursts of speech sequentially as they happen, we need to decide how to handle the results over time.
+
+Imagine the call is progressing:
+
+Burst 1 (0:00 - 0:05): Agent speaks. We label as "Speaker 1" and ignore.
+Burst 2 (0:05 - 0:10): Customer speaks. We label as "Speaker 2", run inference: Male, 46-60, 80% confidence.
+Burst 3 (0:15 - 0:18): Customer speaks again. We run inference: Male, 46-60, 85% confidence.
+Since this is a real-time WebSocket, when and how often do we send the prediction back to the client?
+
+- Option A (Continuous Stream): After every single customer burst, we recalculate our "majority vote" or "running average" for the customer's attributes and push an update over the WebSocket. The client gets continuous real-time updates.
+
+- Option B (Threshold-Triggered Lock): We accumulate predictions silently. As soon as we have enough bursts to hit a highly confident threshold (e.g., 3 consecutive matches), we emit a final "Customer Confirmed" event and stop running the heavy models to save CPU for the rest of the call.
+
+- Option C (End of Call): We accumulate silently and only emit the final, most accurate prediction when the WebSocket connection is closed.
+
+My Recommendation: I recommend a hybrid approach leaning towards Option A. Clients using WebSockets usually want to see a live dashboard updating in real-time. We can emit an event after every burst, but maybe include a status: "in_progress" | "locked" flag once our confidence is high enough that it won't change.
+
+
+# Optimization: Agent Inference Skip (Real-time Streaming)
+
+Since our Agent (the AI) is our own voice, predicting their age and gender is a waste of CPU/GPU resources and confuses the client’s real-time dashboard.
+
+* **How it works**: Using the **Greeting Heuristic**, the first detected speaker is labeled as the "Agent". 
+* **The Skip**: For every subsequent "Agent" speech burst, we bypass the heavy `Wav2Vec2` machine learning models.
+* **The Result**: 
+    * **Agent Speaking**: We send a minimal event: `{"role": "Agent", "status": "speaking"}`. This allows the client to know the agent is talking without wasting compute.
+    * **Customer Speaking**: We run the full inference and return gender, age, and confidence scores.
+* **Benefit**: This effectively cuts our compute costs by ~50% in a balanced conversation and ensures the "Inference Results" are 100% focused on the caller.
+
+
+
+# Question 5: The Codec & Sample Rate Contract
+When a client sends a .wav file, the first few bytes are a header that tells us exactly how to decode the audio (e.g., "This is 16kHz, 16-bit PCM").
+
+When a client streams "raw bytes" over a WebSocket, there is often no header. Just a continuous flow of numbers. If we don't know the sample rate or codec, the audio will just sound like high-pitched static or slow-motion noise, and the model will fail.
+
+How do we know how to decode the incoming byte stream?
+
+Option A (The Strict Contract): We hardcode the server to only accept one specific format (e.g., 16kHz, 16-bit Mono PCM). If the client sends anything else, it breaks.
+Option B (The Setup Message): We require the client to send a JSON configuration message as the very first message over the WebSocket (e.g., {"event": "start", "sample_rate": 8000, "encoding": "mulaw"}). We use this config to decode all subsequent raw byte messages.
+Option C (Container Streaming): We assume the bytes are actually chunks of a standard container (like a streaming .webm file from a browser), and we pipe them through an ffmpeg subprocess that can auto-detect the format on the fly.
+My Recommendation: I highly recommend Option B. This is exactly how enterprise telephony APIs (like Twilio Media Streams) work. The client sends a start event with metadata, and then streams the raw bytes. It makes our service highly flexible to different call center platforms (some use 8kHz, some use 16kHz) without needing ffmpeg to guess the format.
+
+## Who is the client here?
+
+The Client is the software or server that is connecting to our API over the WebSocket.
+
+For example, the "client" might be:
+
+- A telephony server (like Twilio or a PBX system) that is routing the call.
+- The call center software running on the Agent's computer.
+
+The Customer and Agent are just the humans whose voices happen to be inside the audio bytes that the "client" (the software) is sending to us.
+
+So, when the call connects, the telephony software (the client) opens a WebSocket to our backend. Since that software is going to stream raw bytes of the conversation to us, we need to agree with that software on how those bytes are formatted.

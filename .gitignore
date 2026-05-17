@@ -11,5 +11,6 @@ dist/
 build/
 test-audio-files/
 pytest_tmp/
+tests/tmp/
 logs/
 .pytest_cache/

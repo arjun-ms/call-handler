@@ -14,6 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# HuggingFace Token for SpeechBrain models
+ARG HF_TOKEN
+ENV HF_TOKEN=${HF_TOKEN}
+
 # Expose port
 EXPOSE 8000
 

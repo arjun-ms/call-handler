@@ -88,3 +88,85 @@ def _webrtcvad_extract(audio: np.ndarray, sr: int, aggressiveness: int, max_spee
         100 * len(result) / len(audio),
     )
     return result
+
+
+class VadTrigger:
+    """
+    Stateful Voice Activity Detection for processing streaming audio.
+    Accumulates frames and emits a complete burst when a period of silence is detected.
+    """
+    def __init__(self, sample_rate: int = 16000, frame_duration_ms: int = 30, silence_duration_ms: int = 500, aggressiveness: int = 2, max_burst_sec: float = 7.0):
+        self.sample_rate = sample_rate
+        self.frame_duration_ms = frame_duration_ms
+        self.silence_duration_ms = silence_duration_ms
+        
+        self.frame_len = int(sample_rate * frame_duration_ms / 1000)
+        self.silence_frames_threshold = int(silence_duration_ms / frame_duration_ms)
+        self.max_burst_frames = int((max_burst_sec * 1000) / frame_duration_ms) if max_burst_sec else None
+        
+        try:
+            import webrtcvad
+            self.vad = webrtcvad.Vad(aggressiveness)
+            self._use_webrtc = True
+        except ImportError:
+            self.vad = None
+            self._use_webrtc = False
+            logger.warning("webrtcvad unavailable, using energy-based VAD for VadTrigger")
+            
+        self.buffer = np.array([], dtype=np.float32)
+        self.in_speech = False
+        self.silence_counter = 0
+        self.current_burst = []
+
+    def _is_speech(self, frame: np.ndarray) -> bool:
+        if self._use_webrtc:
+            pcm = (frame * 32767).astype(np.int16).tobytes()
+            return self.vad.is_speech(pcm, self.sample_rate)
+        else:
+            return np.sqrt(np.mean(frame**2)) > 0.02
+            
+    def process_audio(self, audio: np.ndarray) -> list[np.ndarray]:
+        """
+        Processes streaming audio and returns a list of completed speech bursts.
+        
+        Args:
+            audio: np.ndarray of float32 samples.
+            
+        Returns:
+            list[np.ndarray]: A list of completed speech bursts.
+        """
+        if len(audio) > 0:
+            self.buffer = np.concatenate([self.buffer, audio])
+            
+        bursts = []
+        
+        while len(self.buffer) >= self.frame_len:
+            frame = self.buffer[:self.frame_len]
+            self.buffer = self.buffer[self.frame_len:]
+            
+            is_speech = self._is_speech(frame)
+            
+            if is_speech:
+                self.in_speech = True
+                self.silence_counter = 0
+                self.current_burst.append(frame)
+                
+                # Enforce max duration
+                if self.max_burst_frames and len(self.current_burst) >= self.max_burst_frames:
+                    bursts.append(np.concatenate(self.current_burst))
+                    self.current_burst = []
+                    self.in_speech = False
+                    self.silence_counter = 0
+            else:
+                if self.in_speech:
+                    self.current_burst.append(frame)  # Keep silence in the tail for natural sound
+                    self.silence_counter += 1
+                    
+                    if self.silence_counter >= self.silence_frames_threshold:
+                        # Burst complete
+                        bursts.append(np.concatenate(self.current_burst))
+                        self.current_burst = []
+                        self.in_speech = False
+                        self.silence_counter = 0
+
+        return bursts
