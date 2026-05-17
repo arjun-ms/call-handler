@@ -2,6 +2,22 @@ import pytest
 import numpy as np
 import soundfile as sf
 
+# Monkeypatch SpeechBrain's LazyModule to prevent AttributeError/ImportError crash during inspections (like librosa's lazy loader stack trace checking)
+try:
+    from speechbrain.utils.importutils import LazyModule
+    original_getattr = LazyModule.__getattr__
+    def safe_getattr(self, attr):
+        if attr == "__file__":
+            raise AttributeError("__file__ is not defined for lazy modules")
+        try:
+            return original_getattr(self, attr)
+        except ImportError as e:
+            raise AttributeError(f"Lazy import failed: {e}") from e
+    LazyModule.__getattr__ = safe_getattr
+except ImportError:
+    pass
+
+
 
 @pytest.fixture
 def sample_wav(tmp_path):

@@ -9,8 +9,8 @@ from app.inference.pipeline import predict
 
 logger = logging.getLogger(__name__)
 
-CREMA_D_DIR = Path(r"E:\Work\call-handler-classification\test-audio-files\CREMA-D")
-LOGS_DIR = Path(r"E:\Work\call-handler-classification\logs")
+CREMA_D_DIR = Path("tests/input-audio-files/CREMA-D")
+LOGS_DIR = Path("logs")
 
 def get_expected_from_filename(filename: str):
     # e.g. "1001_male_51.wav" -> parts = ["1001", "male", "51"]
@@ -72,6 +72,9 @@ def test_crema_d_audio_files(setup_logs):
         
         # Preprocess and load audio
         audio, sr = load_audio(str(audio_file))
+        max_samples = int(10.0 * sr)
+        if len(audio) > max_samples:
+            audio = audio[:max_samples]
         
         # Run inference
         result = predict(audio, sr)

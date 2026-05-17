@@ -59,6 +59,11 @@ def evaluate_dataset(dataset_dir, dataset_name, all_results):
         # Preprocess and load audio
         try:
             audio, sr = load_audio(str(audio_file))
+            # Cap to 10 seconds to avoid memory OOM and long inference times
+            max_eval_sec = 10.0
+            max_samples = int(max_eval_sec * sr)
+            if len(audio) > max_samples:
+                audio = audio[:max_samples]
             result = predict(audio, sr)
             status = "success"
         except Exception as e:
