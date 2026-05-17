@@ -1,0 +1,402 @@
+[
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-5730.mp3",
+      "true_gender": "female_feminine",
+      "true_age": "31-45"
+    },
+    "prediction": {
+      "contact_id": "39f5ac3f-a3a5-4f59-a82b-39a89644be0b",
+      "gender": {
+        "prediction": "female",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "18-30",
+        "confidence": 0.95
+      },
+      "processing_ms": 19187,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-5747.mp3",
+      "true_gender": "female_feminine",
+      "true_age": "31-45"
+    },
+    "prediction": {
+      "contact_id": "62dc9685-9b1e-49af-ae29-f574fd1147f3",
+      "gender": {
+        "prediction": "female",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "18-30",
+        "confidence": 0.91
+      },
+      "processing_ms": 10611,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-18389.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "31-45"
+    },
+    "prediction": {
+      "contact_id": "803ecb4b-43ef-4dc5-944e-661c65e469a0",
+      "gender": {
+        "prediction": "female",
+        "confidence": 0.64
+      },
+      "age_bracket": {
+        "prediction": "31-45",
+        "confidence": 0.95
+      },
+      "processing_ms": 4971,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-19966.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "31-45"
+    },
+    "prediction": {
+      "contact_id": "c4431297-6220-4bc4-9622-4cda4b5031ac",
+      "gender": {
+        "prediction": "male",
+        "confidence": 0.86
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.92
+      },
+      "processing_ms": 8766,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-19967.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "31-45"
+    },
+    "prediction": {
+      "contact_id": "9cecc440-4c90-450f-abaf-1b3cfd6e07d0",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "31-45",
+        "confidence": 0.86
+      },
+      "processing_ms": 9976,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20215.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "1175a7c0-0444-4018-9ee4-3cdf6e037ac0",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.89
+      },
+      "processing_ms": 14877,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20216.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "bd1cb38c-1055-41da-a0f5-f8b8a3f0f0e0",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.79
+      },
+      "processing_ms": 9384,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20217.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "65276856-36e7-4643-946f-ce0196085027",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "60+",
+        "confidence": 0.8
+      },
+      "processing_ms": 12324,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20218.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "16f20fb2-ec78-4355-a7e8-b0c9420d5656",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.9
+      },
+      "processing_ms": 42083,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20219.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "8863d7da-06cb-433c-a660-da3aba29f426",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.95
+      },
+      "processing_ms": 9413,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20221.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "e323e32d-89b7-413d-8163-97a8695eaf40",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "60+",
+        "confidence": 0.77
+      },
+      "processing_ms": 7883,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20222.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "2bb24fe6-6e94-4ee3-bfda-2793022ec627",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "60+",
+        "confidence": 0.7
+      },
+      "processing_ms": 29263,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20223.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "8e9ccf4e-b7ce-437c-a730-7eaaf173ab4e",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "60+",
+        "confidence": 0.82
+      },
+      "processing_ms": 8161,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20224.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "6b8e5195-8cf7-4e57-892c-e22aa90b89d2",
+      "gender": {
+        "prediction": "male",
+        "confidence": 0.98
+      },
+      "age_bracket": {
+        "prediction": "18-30",
+        "confidence": 0.75
+      },
+      "processing_ms": 6596,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20225.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "c6ce974e-952b-41a9-8a51-abb206685ce4",
+      "gender": {
+        "prediction": "male",
+        "confidence": 0.63
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.93
+      },
+      "processing_ms": 9186,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20227.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "8a20caba-52f3-4a6e-9b48-c399f872cc9f",
+      "gender": {
+        "prediction": "male",
+        "confidence": 0.62
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.95
+      },
+      "processing_ms": 9799,
+      "audio_quality": "good"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20228.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "ea9ebaa4-415f-47d9-84f4-bf33728fde51",
+      "gender": {
+        "prediction": "male",
+        "confidence": 0.98
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.95
+      },
+      "processing_ms": 7428,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20229.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "31878ee2-3009-4506-8a75-ef05be1ce005",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.94
+      },
+      "processing_ms": 7623,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20232.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "2dd5b50d-30d2-4d43-8d92-ef1aeebbe9bb",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "46-60",
+        "confidence": 0.95
+      },
+      "processing_ms": 6799,
+      "audio_quality": "degraded"
+    }
+  },
+  {
+    "ground_truth": {
+      "path": "tests/input-audio-files/mozilla-data-collective/sps-corpus-3.0-2026-03-09-en\\audios\\spontaneous-speech-en-20233.mp3",
+      "true_gender": "male_masculine",
+      "true_age": "60+"
+    },
+    "prediction": {
+      "contact_id": "b21e3d00-7ce0-48f9-b0ac-dfcd278b9c69",
+      "gender": {
+        "prediction": "male",
+        "confidence": 1.0
+      },
+      "age_bracket": {
+        "prediction": "60+",
+        "confidence": 0.84
+      },
+      "processing_ms": 31089,
+      "audio_quality": "good"
+    }
+  }
+]

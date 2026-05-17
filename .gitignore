@@ -14,3 +14,4 @@ pytest_tmp/
 tests/tmp/
 logs/
 .pytest_cache/
+tests/input-audio-files/

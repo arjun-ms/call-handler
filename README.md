@@ -115,3 +115,12 @@ Caller audio is strictly treated as Personally Identifiable Information (PII).
 - **No Persistence:** Audio is never persisted to disk beyond the active lifecycle of a request. All processing occurs in-memory or via ephemeral temporary files that are explicitly unlinked when the request completes or errors out.
 - **Sanitized Logging:** Observability is restricted to metadata. We log request IDs, processing latencies, confidence scores, and quality flags. Raw audio payloads and potentially identifiable speech features are never logged.
 - **Isolation:** The Docker container runs autonomously with no external runtime dependencies or egress calls to third-party APIs. All model weights are downloaded securely and run fully offline.
+
+## Test Results
+
+To verify the API's correct functionality under real-world call scenarios, manual smoke tests were performed using Postman. Below is a successful test execution for a female caller:
+
+![Postman Manual Check - female_17.wav](tests/test-results/manual-checks-via-postman/female_17.png)
+
+👉 [View all manual Postman test result screenshots](tests/test-results/manual-checks-via-postman)
+

@@ -37,8 +37,7 @@ This document tracks the progress of the Voice Attribute Inference service imple
 - [x] Mozilla CommonVoice evaluation script (`scripts/eval_commonvoice.py`)
 - [x] CREMA-D dataset evaluation harness (`tests/test_crema_d.py`)
 - [x] CommonPhone dataset evaluation (`tests/test_eval_datasets.py`) — 100% gender accuracy
-- [x] AppTek Call-Center dataset download + evaluation — OOM on long audio (needs VAD fix)
-- [x] Evaluation harness script against a public dataset (`scripts/eval_commonvoice.py`)
+- [x] AppTek Call-Center dataset download + evaluation — OOM on long audio (fixed via audio capping)
 - [x] Confidence calibration and accuracy metrics in eval script
 - [x] Sample audio file and instructions for smoke testing
 

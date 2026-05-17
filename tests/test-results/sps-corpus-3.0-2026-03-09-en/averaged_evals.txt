@@ -1,0 +1,10 @@
+Aggregated Summary over 5 evaluation runs
+Total valid samples evaluated across all runs: 75
+
+Global Gender Accuracy: 92.0% (69/75)
+Global Age Bracket Accuracy (Exact): 33.3% (25/75)
+Global Age Bracket Accuracy (±1 Bracket): 94.7% (71/75)
+
+Global Age Bracket Breakdown:
+  31-45: Exact 40.0% | ±1 Bracket 100.0% (Total: 25)
+  60+: Exact 30.0% | ±1 Bracket 92.0% (Total: 50)

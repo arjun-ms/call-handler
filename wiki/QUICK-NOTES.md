@@ -169,3 +169,49 @@ For example, the "client" might be:
 The Customer and Agent are just the humans whose voices happen to be inside the audio bytes that the "client" (the software) is sending to us.
 
 So, when the call connects, the telephony software (the client) opens a WebSocket to our backend. Since that software is going to stream raw bytes of the conversation to us, we need to agree with that software on how those bytes are formatted.
+
+# Alternative Base Models (Trade-offs & Constraints)
+While `audeering/wav2vec2` is currently used as an off-the-shelf ONNX solution, other SOTA architectures were evaluated but passed on for the following reasons:
+- **Whisper (OpenAI Encoder Embeddings):** While Whisper is exceptional at handling noisy, real-world data, it strictly violates our latency constraints (<500ms) for real-time WebSocket streaming due to its heavy computational cost.
+- **HuBERT:** It provides better phonetic stability on stutters than Wav2Vec2, but requires significant engineering effort (custom fine-tuning and training a classification head) while yielding a lower ROI for noisy conversational audio.
+- **ECAPA-TDNN / x-vectors (SpeechBrain):** Although extremely lightweight and incredibly fast (we already load it for diarization), adopting it for age/gender prediction requires us to explicitly label our own domain-specific datasets and train a custom classification head from scratch, as there is no ready-to-use version for this specific task.
+
+### Why do we need to add age/gender labels manually for ECAPA-TDNN? Didn't we do the same for Wav2Vec2?
+We didn't have to label data or train a custom classification head for Wav2Vec2 because the specific model we downloaded (`audeering/wav2vec2-large-robust-6-ft-age-gender`) was **already fine-tuned** for this exact task by Audeering. They did the heavy lifting of gathering demographic datasets and training the final prediction layer. 
+
+ECAPA-TDNN (`speechbrain/spkrec-ecapa-voxceleb`) was trained by SpeechBrain for a completely different task: **Speaker Verification** (figuring out if Speaker A is the same person as Speaker B). While its acoustic embeddings contain the physical acoustic features needed to guess age and gender, nobody has published a pre-trained classification head for it on Hugging Face. If we switch to ECAPA-TDNN to predict age/gender, we would have to gather the datasets and train that head ourselves.
+
+
+# Improvements to try:
+
+1.
+We noticed earlier that sample spontaneous-speech-en-18389.mp3 completely failed on gender (Predicted: Female, True: Male) and flagged as degraded. If you want to invoke the Systematic Debugging workflow, we can treat this failure as a bug. We would:
+
+- Isolate that exact audio file.
+- Instrument the VAD, SNR, and ONNX layers to dump exactly what data is flowing into the model.
+- Figure out the root cause (e.g., Did VAD clip the start of a word? Is the background noise frequency tricking the model?)
+- Implement a targeted fix (like tuning the VAD threshold or adjusting SNR bounds).
+
+
+2. 
+If you want to build something new, we can invoke the Brainstorming workflow to design and spec out our next major feature before we write the code. Some high-value ideas based on our QUICK-NOTES.md:
+
+Agent Inference Skip: Brainstorming the architectural logic for how the WebSocket will automatically detect the Agent's voice (via the Greeting Heuristic) and bypass the heavy ML model to save 50% CPU.
+
+Continuous Age Regression: Brainstorming how we could extract the embeddings to output a continuous age (e.g., 42.5 years) instead of rigid brackets to solve our exact-accuracy problem.
+
+Speaker Diarization Module: Designing the flow for how we would integrate Pyannote to handle Mono-mixed 2-party calls natively.
+
+# Question 6: Diarizing Back-and-Forth Conversation
+
+**Question:** When uploading an entire audio file (like a real call), we are diarizing and taking only the audio of the customer. How are the subsequent voices guessed during back-and-forth talking?
+
+**Answer:** 
+The diarization module uses **Speaker Embeddings** (specifically `speechbrain/spkrec-ecapa-voxceleb`). Whenever the pipeline detects a new burst of speech, it extracts an "acoustic fingerprint" (a vector representing the physical characteristics of the speaker's vocal tract, completely independent of *what* they are saying).
+
+For every new burst, it compares its fingerprint against the known speakers using cosine similarity:
+- **Burst 1:** "Hello, thanks for calling..." → New fingerprint created! Saved as `speaker_0` (Agent).
+- **Burst 2:** "Hi, my package is late..." → Compared to `speaker_0`. No match! Saved as `speaker_1` (Customer).
+- **Burst 3:** "I can help with that." → Compared to `speaker_0` and `speaker_1`. High match with `speaker_0`! Assigned to Agent.
+
+No matter how many times they go back and forth or interrupt each other, the system mathematically groups all of `speaker_0`'s bursts into one bucket, and all of `speaker_1`'s bursts into another. Finally, the API grabs the customer's bucket (using our Greeting Heuristic), caps it, and runs the inference on just their voice.

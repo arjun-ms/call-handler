@@ -1,0 +1,9 @@
+
+Evaluated 20 samples successfully.
+Gender Accuracy: 95.0% (19/20)
+Age Bracket Accuracy (Exact): 35.0% (7/20)
+Age Bracket Accuracy (±1 Bracket): 95.0% (19/20)
+
+Age Bracket Breakdown:
+  31-45: Exact 40.0% | ±1 Bracket 100.0% (Total: 5)
+  60+: Exact 33.3% | ±1 Bracket 93.3% (Total: 15)

@@ -128,6 +128,12 @@ async def infer(file: UploadFile = File(...)):
                         
             customer_speech = np.concatenate(speaker_segments[customer_speaker])
             
+        # Cap inference to max_inference_speech_sec to prevent latency/OOM spikes
+        max_samples = int(settings.max_inference_speech_sec * sr)
+        if len(customer_speech) > max_samples:
+            logger.info("Capping customer speech from %.1fs to %.1fs", len(customer_speech)/sr, settings.max_inference_speech_sec)
+            customer_speech = customer_speech[:max_samples]
+
         # Run inference on customer speech
         results = predict(customer_speech, sr)
 

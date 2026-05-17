@@ -11,7 +11,7 @@ from app.audio.codec import decode_burst
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.websocket("/ws/stream")
+@router.websocket("/ws/analyze")
 async def websocket_stream(websocket: WebSocket):
     await websocket.accept()
     
