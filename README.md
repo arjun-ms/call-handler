@@ -77,7 +77,62 @@ curl -X POST "http://localhost:8000/analyze" \
 
 ### `WS /ws/analyze`
 
-Send raw audio bytes incrementally and send the text `PROCESS` to trigger inference.
+Streams raw audio bytes incrementally, running progressive voice attribute prediction in real time as VAD triggers speech bursts.
+
+#### Protocol Sequence
+
+1. **Initiate Handshake (Text Message):**
+   The client must first send a JSON `start` event to initialize the session:
+   ```json
+   {
+     "type": "start",
+     "call_id": "unique-call-id-123",
+     "sample_rate": 16000,
+     "encoding": "pcm_s16le"
+   }
+   ```
+
+2. **Stream Audio (Binary Messages):**
+   Stream raw PCM little-endian 16-bit audio bytes incrementally. The backend dynamically aggregates frames. When VAD triggers a completed speech burst:
+   - It separates Agent and Customer speech using ECAPA-TDNN speaker embeddings.
+   - It automatically skips inference for the Agent (Greeting Heuristic).
+   - It runs age/gender prediction on the Customer bursts and streams predictions back.
+
+3. **Terminate Session (Text Message):**
+   To finalize, send a JSON `stop` event:
+   ```json
+   {
+     "type": "stop"
+   }
+   ```
+   This flushes trailing audio, runs any final inference (reclassifying single-speaker calls as Customer), and closes the connection cleanly.
+
+#### Response Format
+
+For Customer speech bursts:
+```json
+{
+  "type": "inference_result",
+  "call_id": "unique-call-id-123",
+  "speaker_id": "speaker_1",
+  "role": "Customer",
+  "gender": "female",
+  "age_bracket": "18-30",
+  "confidence_gender": 0.91,
+  "confidence_age": 0.74
+}
+```
+
+For Agent speech bursts (skipped to prevent latency/overhead):
+```json
+{
+  "type": "inference_result",
+  "call_id": "unique-call-id-123",
+  "speaker_id": "speaker_0",
+  "role": "Agent",
+  "status": "speaking"
+}
+```
 
 ## Testing
 
