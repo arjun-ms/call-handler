@@ -4,10 +4,10 @@ import wave
 import websockets
 
 async def test_stream():
-    uri = "ws://localhost:8001/ws/stream"
+    uri = "ws://localhost:8000/ws/analyze"
     
     # We will use one of the test wav files
-    wav_file = "E:/Work/call-handler-classification/tests/input-audio-files/apptek/test/en-AU/audio/en_AU_Agriculture_1586330_channel1.wav"
+    wav_file = "E:/Work/call-handler-classification/tests/input-audio-files/real-call/female_17.wav"
     
     # Read the wav file
     try:
