@@ -127,3 +127,13 @@ To verify the API's correct functionality under real-world call scenarios, manua
 
 👉 [View all manual Postman test result screenshots](tests/test-results/manual-checks-via-postman)
 
+### WebSocket Streaming
+
+To test real-time streaming inference via WebSocket, run the included test client:
+```bash
+python tests/manual_stream_client.py
+```
+
+This script simulates a live call by streaming `female_17.wav` in small chunks (~128ms each) with real-time delays, just like a production telephony system would. The server progressively returns inference results as speech bursts are detected — separating Agent and Customer voices in real time.
+
+![WebSocket Streaming Test - manual_stream_client.py](tests/test-results/manual-checks-via-postman/manual_stream_client.png)
