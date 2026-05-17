@@ -112,3 +112,44 @@ class StreamSession:
         except Exception as e:
             logger.error(f"Error processing burst: {e}", exc_info=True)
             return None
+
+    def finalize(self) -> list[dict]:
+        """Finalize the session: flush remaining VAD audio and handle single-speaker sessions.
+        
+        If only one speaker was detected across the entire session (common when testing
+        with single-speaker files), reclassify them as Customer and run inference.
+        
+        Returns a list of final event dictionaries.
+        """
+        events = []
+        
+        # 1. Flush any remaining speech from VAD
+        remaining_bursts = self.vad.flush()
+        for burst in remaining_bursts:
+            event = self._process_burst(burst)
+            if event:
+                events.append(event)
+        
+        # 2. Single-speaker correction: if only one speaker was ever detected,
+        #    they were marked Agent and all inference was skipped.
+        #    Reclassify as Customer and re-run inference on the last burst.
+        if len(self.speaker_role_map) == 1:
+            sole_speaker = list(self.speaker_role_map.keys())[0]
+            if self.speaker_role_map[sole_speaker] == "Agent":
+                logger.info("Single-speaker session detected — reclassifying %s as Customer", sole_speaker)
+                self.speaker_role_map[sole_speaker] = "Customer"
+                
+                # Re-process the last available burst with Customer role
+                if remaining_bursts:
+                    last_burst = remaining_bursts[-1]
+                else:
+                    # No remaining burst from flush; nothing to re-run
+                    return events
+                
+                event = self._process_burst(last_burst)
+                if event:
+                    # Replace the Agent "speaking" event with the actual inference
+                    events = [e for e in events if not (e.get("speaker_id") == sole_speaker and e.get("status") == "speaking")]
+                    events.append(event)
+        
+        return events
