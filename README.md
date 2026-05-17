@@ -9,6 +9,7 @@ A production-ready, low-latency FastAPI backend service that performs audio attr
 - **Audio Quality Assessment:** Detects clipping, low volume, silence, and low Signal-to-Noise Ratio (SNR) before inference.
 - **State-of-the-Art ML Inference:** Uses Hugging Face's `audeering/wav2vec2-large-robust-6-ft-age-gender` model for accurate age and gender prediction.
 - **WebSocket Streaming:** Real-time progressive stream inference over WebSocket via `/ws/analyze`.
+- **Speaker Diarization & Greeting Heuristic:** Cleanly separates Agent vs. Customer voices using `speechbrain`'s ECAPA-TDNN speaker embeddings and cosine similarity clustering to isolate and analyze only the customer's voice.
 - **Dockerized:** Packaged cleanly with `ffmpeg` dependencies pre-installed for immediate deployment.
 
 ## Architecture
@@ -95,10 +96,12 @@ python scripts/eval_commonvoice.py --dir /path/to/clips --tsv /path/to/validated
 ## Design Write-up & Rationale
 
 **Approach & Model Choice:**
-We selected the `audeering/wav2vec2-large-robust-6-ft-age-gender` model, served via the ONNX runtime (`audonnx`). This multi-task model directly predicts both age and gender, and is fine-tuned on diverse speech data, making it highly robust to the noisy acoustic conditions typical in logistics calls. Using ONNX instead of native PyTorch allows us to dramatically lower CPU inference latency (to under 500ms) and reduce memory footprint, ensuring the service runs smoothly in a basic Docker container. Before inference, the pipeline applies Voice Activity Detection (`webrtcvad`) and SNR calculation to slice out silence/noise. This limits the audio sent to the ML model, simultaneously speeding up processing and preventing the model from hallucinating predictions on background truck noise.
+We selected the `audeering/wav2vec2-large-robust-6-ft-age-gender` model, served via the ONNX runtime (`audonnx`). This multi-task model directly predicts both age and gender, and is fine-tuned on diverse speech data, making it highly robust to the noisy acoustic conditions typical in logistics calls. Using ONNX instead of native PyTorch allows us to dramatically lower CPU inference latency (to under 500ms) and reduce memory footprint, ensuring the service runs smoothly in a basic Docker container. 
+
+Before inference, the pipeline applies Voice Activity Detection (`webrtcvad`) and SNR calculation to slice out silence/noise. Furthermore, we integrated a custom **Speaker Diarization** module using `speechbrain`'s ECAPA-TDNN embeddings and cosine similarity clustering. Combined with a smart **Greeting Heuristic** (where the first speaker is identified as the Agent and subsequent speakers are identified as the Customer), the service cleanly isolates and runs inference *strictly* on the customer's voice, filtering out the agent completely. This limits the audio sent to the ML model, simultaneously speeding up processing, avoiding agent classification overhead, and preventing the model from hallucinating predictions on background noise.
 
 **Improving with More Time:**
-With more time, I would fine-tune the model explicitly on telephony datasets to better adapt to narrow-band codec artifacts. I'd also integrate speaker diarization to cleanly separate driver vs. agent voices in multi-speaker scenarios, and add accent/language detection to enrich the attribute payload.
+With more time, I would fine-tune the model explicitly on telephony datasets to better adapt to narrow-band codec artifacts. I'd also integrate advanced overlapped speech detection (like `pyannote/segmentation`) to handle scenarios where the agent and driver talk over each other, and add accent/language detection to enrich the attribute payload.
 
 **Scaling to 1,000 Concurrent Calls:**
 Because the service is entirely stateless, it scales horizontally out-of-the-box behind a load balancer. However, at 1,000 concurrent streams, we'd want to decouple ingestion from inference. I would terminate WebSockets at a lightweight edge gateway, push audio chunks to a message broker (like Kafka or Redis Streams), and have GPU-backed inference workers consume from the queue. Utilizing dynamic batching (e.g., Triton Inference Server) on the GPU workers would allow us to process dozens of audio chunks simultaneously, drastically reducing the per-stream compute cost and maintaining low latency at high scale.
