@@ -1,8 +1,11 @@
 - handled multi-audio format using ffmpeg
 - noisy logistics conditions are actively mitigated by the Voice Activity Detection (VAD) and Signal-to-Noise Ratio (SNR) components.
 - ONNX (Open Neural Network Exchange) — file format for storing ML models (Use ONNX if you need cross-framework flexibility (e.g., moving from PyTorch to TensorRT for Nvidia GPUs))
+- fast inference and lightweight deployment (by converting the model to onnx)
 - "Wav2Vec 2.0" — a family of deep learning models for self-supervised learning of speech representations, widely used for tasks like ASR, speaker verification, and classification.
 - audonnx deploys machine learning models stored in ONNX format.
+- audonnx is a library used to load and run audio based ML models.
+- it simplifies tasks emotion recognition, audio classification and speaker embeddings
 - Latency (< 500ms): Handled. By using the ONNX runtime and actively slicing out silence via VAD, the pipeline runs under 500ms on CPU.
 - API Contract Matching: Perfect match. The endpoints are strictly mapped to /analyze and /ws/analyze. Crucially, we mapped the model's internal child prediction to unknown and added a low-confidence threshold fallback, ensuring it strictly adheres to "male" | "female" | "unknown" and the specified age brackets.
 - Privacy / PII: Handled. The cleanup_temp() function guarantees ephemeral handling, and the privacy guarantees are fully detailed in the [README.md](README.md).
@@ -215,3 +218,17 @@ For every new burst, it compares its fingerprint against the known speakers usin
 - **Burst 3:** "I can help with that." → Compared to `speaker_0` and `speaker_1`. High match with `speaker_0`! Assigned to Agent.
 
 No matter how many times they go back and forth or interrupt each other, the system mathematically groups all of `speaker_0`'s bursts into one bucket, and all of `speaker_1`'s bursts into another. Finally, the API grabs the customer's bucket (using our Greeting Heuristic), caps it, and runs the inference on just their voice.
+
+# Quick Reference: Key Concepts
+
+- **VAD (Voice Activity Detection)** — detects whether someone is speaking or not. Used to trim silence and segment audio into speech bursts before any downstream processing.
+
+- **Cosine Similarity** — the math behind diarization (speaker separation). Each speech burst gets a voice embedding (acoustic fingerprint), and bursts are grouped into speakers by comparing how similar their embeddings are using cosine similarity against stored centroids.
+
+- **Speaker Separation via Greeting Heuristic** — in outbound logistics calls the agent always speaks first ("Hello, thanks for calling..."). The first detected speaker is tagged as the Agent, every other speaker after that is the Customer.
+
+- **Single-Speaker Fallback** — if only one speaker is detected across the entire conversation, the system automatically reclassifies that speaker as the Customer and runs inference on their voice (instead of skipping them as the Agent).
+
+- **PCM (Pulse Code Modulation)** — a method of converting analog sound into digital sound. The pipeline normalizes all input audio to 16kHz Mono 16-bit PCM WAV before processing.
+
+- **Pipeline Order: ASR → VAD → Diarization** — audio first hits Voice Activity Detection (strip silence, emit speech bursts), then each burst goes through Diarization (assign speaker IDs via embeddings), and finally inference runs on the customer's speech only.

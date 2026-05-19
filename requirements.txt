@@ -12,4 +12,3 @@ audonnx>=0.1.0
 audeer>=1.0.0
 onnxruntime>=1.17.0
 soundfile>=0.12.0
-speechbrain>=1.0.0

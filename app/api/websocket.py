@@ -11,7 +11,7 @@ from app.audio.codec import decode_burst
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.websocket("/ws/analyze")
+@router.websocket("/ws/stream")
 async def websocket_stream(websocket: WebSocket):
     await websocket.accept()
     
@@ -63,16 +63,6 @@ async def websocket_stream(websocket: WebSocket):
                 try:
                     data = json.loads(message["text"])
                     if data.get("type") == "stop":
-                        # Finalize: flush remaining VAD audio + single-speaker correction
-                        if session:
-                            final_events = await asyncio.to_thread(session.finalize)
-                            for event in final_events:
-                                event_payload = {
-                                    "type": "inference_result",
-                                    "call_id": call_id,
-                                    **event
-                                }
-                                await websocket.send_json(event_payload)
                         break
                 except json.JSONDecodeError:
                     pass

@@ -135,9 +135,6 @@ def _parse_gender(logits: np.ndarray) -> dict:
 
     prediction = labels[idx]
 
-    # Log the raw prediction before mapping for internal visibility
-    logger.info("Raw gender prediction: %s (confidence: %.2f)", prediction, confidence)
-
     # Map 'child' or low confidence to 'unknown' to match API contract
     if prediction == "child" or confidence < settings.confidence_threshold:
         prediction = "unknown"

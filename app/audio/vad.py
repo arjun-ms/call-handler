@@ -170,17 +170,3 @@ class VadTrigger:
                         self.silence_counter = 0
 
         return bursts
-
-    def flush(self) -> list[np.ndarray]:
-        """Flush any remaining speech burst in the buffer.
-        
-        Call this when the audio stream ends to emit the final burst
-        that hasn't been terminated by a silence gap.
-        """
-        bursts = []
-        if self.current_burst:
-            bursts.append(np.concatenate(self.current_burst))
-            self.current_burst = []
-            self.in_speech = False
-            self.silence_counter = 0
-        return bursts
